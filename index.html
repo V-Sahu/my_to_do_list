@@ -9,8 +9,8 @@
   <style>
     body {
       font-family: 'Quicksand', sans-serif;
-      background-color: #FFFDF7;
-      color: #5D4037;
+      background-color: #14110F;
+      color: #F5EBE0;
       margin: 0;
       padding: 0;
     }
@@ -20,6 +20,7 @@
       padding: 1.5rem 1.5rem 0.5rem;
       font-size: 2rem;
       font-weight: bold;
+      color: #F7D08A;
     }
 
     .auth-bar {
@@ -33,7 +34,9 @@
     }
 
     .sync-status {
-      background-color: #FFE0B2;
+      background-color: #231C18;
+      color: #F7D08A;
+      border: 1px solid #3A2E27;
       padding: 0.3rem 0.75rem;
       border-radius: 999px;
       font-weight: 600;
@@ -42,27 +45,33 @@
     .login-card {
       max-width: 360px;
       margin: 3rem auto;
-      background-color: #FFE0B2;
+      background-color: #231C18;
+      border: 1px solid #3A2E27;
       padding: 1.5rem;
       border-radius: 15px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
       display: flex;
       flex-direction: column;
       gap: 0.75rem;
     }
 
     .login-card input {
-      background-color: #FFFDF7;
-      border: 1px solid #FFCCBC;
+      background-color: #14110F;
+      border: 1px solid #3A2E27;
       border-radius: 8px;
       padding: 0.6rem 0.75rem;
       font-family: inherit;
       font-size: 1rem;
-      color: #5D4037;
+      color: #F5EBE0;
+      outline: none;
+    }
+
+    .login-card input:focus {
+      border-color: #E09F3E;
     }
 
     .login-error {
-      color: #B71C1C;
+      color: #FF8A80;
       font-size: 0.9rem;
       min-height: 1.2em;
     }
@@ -71,6 +80,22 @@
       text-align: center;
       font-size: 1.2rem;
       margin-bottom: 1rem;
+    }
+
+    input[type="date"] {
+      background-color: #231C18;
+      color: #F5EBE0;
+      border: 1px solid #3A2E27;
+      border-radius: 8px;
+      padding: 0.4rem 0.7rem;
+      font-family: inherit;
+      font-size: 1rem;
+      color-scheme: dark;
+      outline: none;
+    }
+
+    input[type="date"]:focus {
+      border-color: #E09F3E;
     }
 
     .container {
@@ -84,10 +109,11 @@
     }
 
     .column {
-      background-color: #FFE0B2;
+      background-color: #231C18;
+      border: 1px solid #3A2E27;
       padding: 1rem;
       border-radius: 15px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
       flex: 1 1 300px;
       min-width: 280px;
       transition: transform 0.3s ease;
@@ -100,6 +126,7 @@
     h2 {
       text-align: center;
       margin-bottom: 0.5rem;
+      color: #F7D08A;
     }
 
     ul {
@@ -111,7 +138,8 @@
       margin: 0.5rem 0;
       display: flex;
       align-items: center;
-      background-color: #FFCCBC;
+      background-color: #2E241E;
+      border: 1px solid #3D3028;
       padding: 0.5rem 0.75rem;
       border-radius: 10px;
       transition: background-color 0.3s;
@@ -119,11 +147,12 @@
 
     li.completed {
       text-decoration: line-through;
-      opacity: 0.6;
+      opacity: 0.55;
     }
 
     input[type="checkbox"] {
       margin-right: 0.75rem;
+      accent-color: #E09F3E;
     }
 
     input[type="text"] {
@@ -132,13 +161,17 @@
       background: transparent;
       outline: none;
       font-size: 1rem;
-      color: #5D4037;
+      color: #F5EBE0;
       font-family: inherit;
     }
 
+    input[type="text"]::placeholder {
+      color: #9E8B7B;
+    }
+
     button {
-      background-color: #FFD180;
-      color: #5D4037;
+      background-color: #E09F3E;
+      color: #14110F;
       border: none;
       padding: 0.5rem 1rem;
       margin-top: 0.5rem;
@@ -150,7 +183,7 @@
     }
 
     button:hover {
-      background-color: #FFC107;
+      background-color: #FFC857;
     }
 
     .auth-bar button {
