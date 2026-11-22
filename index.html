@@ -1,519 +1,503 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2685.6">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>To-Do List</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background-color: #FFFDF7;
+      color: #5D4037;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      text-align: center;
+      padding: 1.5rem 1.5rem 0.5rem;
+      font-size: 2rem;
+      font-weight: bold;
+    }
+
+    .auth-bar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      font-size: 0.9rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .sync-status {
+      background-color: #FFE0B2;
+      padding: 0.3rem 0.75rem;
+      border-radius: 999px;
+      font-weight: 600;
+    }
+
+    .login-card {
+      max-width: 360px;
+      margin: 3rem auto;
+      background-color: #FFE0B2;
+      padding: 1.5rem;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .login-card input {
+      background-color: #FFFDF7;
+      border: 1px solid #FFCCBC;
+      border-radius: 8px;
+      padding: 0.6rem 0.75rem;
+      font-family: inherit;
+      font-size: 1rem;
+      color: #5D4037;
+    }
+
+    .login-error {
+      color: #B71C1C;
+      font-size: 0.9rem;
+      min-height: 1.2em;
+    }
+
+    .date-section {
+      text-align: center;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      padding: 1rem;
+    }
+
+    .column {
+      background-color: #FFE0B2;
+      padding: 1rem;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      flex: 1 1 300px;
+      min-width: 280px;
+      transition: transform 0.3s ease;
+    }
+
+    .column:hover {
+      transform: scale(1.02);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      margin: 0.5rem 0;
+      display: flex;
+      align-items: center;
+      background-color: #FFCCBC;
+      padding: 0.5rem 0.75rem;
+      border-radius: 10px;
+      transition: background-color 0.3s;
+    }
+
+    li.completed {
+      text-decoration: line-through;
+      opacity: 0.6;
+    }
+
+    input[type="checkbox"] {
+      margin-right: 0.75rem;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      border: none;
+      background: transparent;
+      outline: none;
+      font-size: 1rem;
+      color: #5D4037;
+      font-family: inherit;
+    }
+
+    button {
+      background-color: #FFD180;
+      color: #5D4037;
+      border: none;
+      padding: 0.5rem 1rem;
+      margin-top: 0.5rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      font-family: inherit;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #FFC107;
+    }
+
+    .auth-bar button {
+      margin-top: 0;
+      padding: 0.35rem 0.75rem;
+      font-size: 0.85rem;
+    }
+
+    .centered-button {
+      display: flex;
+      justify-content: center;
+      margin: 2rem auto;
+    }
+
+    .me-section {
+      max-width: 1000px;
+      margin: 0 auto;
+      margin-top: 1rem;
+    }
+
+    .study-section {
+      max-width: 1000px;
+      margin: 0 auto;
+      margin-bottom: 1rem;
+    }
+
+    .study-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+    }
+
+    #study ul {
+      padding: 0;
+      list-style: none;
+      display: contents;
+    }
   </style>
 </head>
+
 <body>
-<p class="p1">&lt;!DOCTYPE html&gt;</p>
-<p class="p1">&lt;html lang="en"&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;head&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta charset="UTF-8" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;title&gt;To-Do List&lt;/title&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&amp;display=swap" rel="stylesheet"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;style&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>body {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-family: 'Quicksand', sans-serif;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background-color: #FFFDF7;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>color: #5D4037;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin: 0;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>padding: 0;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>header {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>text-align: center;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>padding: 1.5rem 1.5rem 0.5rem;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-size: 2rem;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-weight: bold;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.auth-bar {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>display: flex;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>justify-content: center;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>align-items: center;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>gap: 0.75rem;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>flex-wrap: wrap;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-size: 0.9rem;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin-bottom: 0.75rem;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.sync-status {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background-color: #FFE0B2;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>padding: 0.3rem 0.75rem;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border-radius: 999px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-weight: 600;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.login-card {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>max-width: 360px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin: 3rem auto;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background-color: #FFE0B2;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>padding: 1.5rem;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border-radius: 15px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>display: flex;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>flex-direction: column;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>gap: 0.75rem;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.login-card input {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background-color: #FFFDF7;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border: 1px solid #FFCCBC;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border-radius: 8px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>padding: 0.6rem 0.75rem;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-family: inherit;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-size: 1rem;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>color: #5D4037;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.login-error {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>color: #B71C1C;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-size: 0.9rem;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>min-height: 1.2em;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.date-section {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>text-align: center;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-size: 1.2rem;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin-bottom: 1rem;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.container {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>max-width: 1000px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin: 0 auto;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>display: flex;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>flex-wrap: wrap;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>justify-content: center;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>gap: 2rem;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>padding: 1rem;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.column {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background-color: #FFE0B2;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>padding: 1rem;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border-radius: 15px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>flex: 1 1 300px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>min-width: 280px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>transition: transform 0.3s ease;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.column:hover {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>transform: scale(1.02);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>h2 {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>text-align: center;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin-bottom: 0.5rem;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>ul {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>list-style: none;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>padding: 0;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>li {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin: 0.5rem 0;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>display: flex;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>align-items: center;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background-color: #FFCCBC;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>padding: 0.5rem 0.75rem;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border-radius: 10px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>transition: background-color 0.3s;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>li.completed {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>text-decoration: line-through;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>opacity: 0.6;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>input[type="checkbox"] {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin-right: 0.75rem;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>input[type="text"] {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>flex: 1;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border: none;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background: transparent;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>outline: none;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-size: 1rem;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>color: #5D4037;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-family: inherit;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>button {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background-color: #FFD180;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>color: #5D4037;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border: none;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>padding: 0.5rem 1rem;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin-top: 0.5rem;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border-radius: 8px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>cursor: pointer;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-weight: bold;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-family: inherit;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>transition: background-color 0.3s ease;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>button:hover {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background-color: #FFC107;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.auth-bar button {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin-top: 0;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>padding: 0.35rem 0.75rem;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-size: 0.85rem;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.centered-button {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>display: flex;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>justify-content: center;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin: 2rem auto;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.me-section {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>max-width: 1000px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin: 0 auto;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin-top: 1rem;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.study-section {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>max-width: 1000px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin: 0 auto;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin-bottom: 1rem;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.study-grid {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>display: grid;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>grid-template-columns: repeat(3, 1fr);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>gap: 0.75rem;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>#study ul {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>padding: 0;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>list-style: none;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>display: contents;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/style&gt;</p>
-<p class="p1">&lt;/head&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;body&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;header&gt;To-Do List&lt;/header&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div id="login-view" class="login-card"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;h2 style="margin-top: 0;"&gt;Sign In&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;input type="email" id="login-email" placeholder="Your email" autocomplete="email" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;input type="password" id="login-password" placeholder="Your password" autocomplete="current-password" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;button id="login-btn" type="button"&gt;Sign In &amp;amp; Sync&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="login-error" class="login-error"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div id="app-view" style="display: none;"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="auth-bar"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;span id="sync-status" class="sync-status"&gt;Synced&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;button id="logout-btn" type="button"&gt;Sign Out&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="date-section"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;input type="date" id="dateInput" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="container"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="column" id="office"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;h2&gt;Other Tasks&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;ul&gt;&lt;/ul&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;button onclick="addTask('office')"&gt;+ Add Task&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;button onclick="clearSelected('office')"&gt;🧹 Clear Selected&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="column" id="home"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;h2&gt;Home Tasks&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;ul&gt;&lt;/ul&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;button onclick="addTask('home')"&gt;+ Add Task&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;button onclick="clearSelected('home')"&gt;🧹 Clear Selected&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="study-section"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="column" id="study"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;h2&gt;Study 📘&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="study-grid"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;ul&gt;&lt;/ul&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;button onclick="addTask('study')"&gt;+ Add Task&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;button onclick="clearSelected('study')"&gt;🧹 Clear Selected&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="me-section"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="column" id="me"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;h2&gt;To finish today 💖&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;ul&gt;&lt;/ul&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;button onclick="addTask('me')"&gt;+ Add Task&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;button onclick="clearSelected('me')"&gt;🧹 Clear Selected&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="centered-button"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;button onclick="resetTasks()"&gt;🔄 Daily Reset&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;canvas id="confetti-canvas" style="position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:9999;"&gt;&lt;/canvas&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"&gt;&lt;/script&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;script type="module"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";</p>
-<p class="p1"><span class="Apple-converted-space">    </span>import {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>getAuth,</p>
-<p class="p1"><span class="Apple-converted-space">      </span>onAuthStateChanged,</p>
-<p class="p1"><span class="Apple-converted-space">      </span>signInWithEmailAndPassword,</p>
-<p class="p1"><span class="Apple-converted-space">      </span>signOut</p>
-<p class="p1"><span class="Apple-converted-space">    </span>} from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";</p>
-<p class="p1"><span class="Apple-converted-space">    </span>import {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>getFirestore,</p>
-<p class="p1"><span class="Apple-converted-space">      </span>doc,</p>
-<p class="p1"><span class="Apple-converted-space">      </span>setDoc,</p>
-<p class="p1"><span class="Apple-converted-space">      </span>onSnapshot</p>
-<p class="p1"><span class="Apple-converted-space">    </span>} from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>const firebaseConfig = {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>apiKey: "AIzaSyBjAgIXbfKwApYcP0OMcXKp06B1ZC6mjjk",</p>
-<p class="p1"><span class="Apple-converted-space">      </span>authDomain: "personal-todo-sync-1baef.firebaseapp.com",</p>
-<p class="p1"><span class="Apple-converted-space">      </span>projectId: "personal-todo-sync-1baef",</p>
-<p class="p1"><span class="Apple-converted-space">      </span>storageBucket: "personal-todo-sync-1baef.firebasestorage.app",</p>
-<p class="p1"><span class="Apple-converted-space">      </span>messagingSenderId: "1049871009058",</p>
-<p class="p1"><span class="Apple-converted-space">      </span>appId: "1:1049871009058:web:81b209b4892cecb60bd17b",</p>
-<p class="p1"><span class="Apple-converted-space">      </span>measurementId: "G-8WGSTZ2G1Y"</p>
-<p class="p1"><span class="Apple-converted-space">    </span>};</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>const app = initializeApp(firebaseConfig);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const auth = getAuth(app);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const db = getFirestore(app);</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>const sections = ['office', 'home', 'me', 'study'];</p>
-<p class="p1"><span class="Apple-converted-space">    </span>let currentUser = null;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>let unsubscribeSnapshot = null;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>let isApplyingRemoteUpdate = false;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>let saveTimer = null;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>const loginView = document.getElementById('login-view');</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const appView = document.getElementById('app-view');</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const loginEmail = document.getElementById('login-email');</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const loginPassword = document.getElementById('login-password');</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const loginBtn = document.getElementById('login-btn');</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const loginError = document.getElementById('login-error');</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const logoutBtn = document.getElementById('logout-btn');</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const syncStatus = document.getElementById('sync-status');</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const dateInput = document.getElementById('dateInput');</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>function setStatus(text) {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>syncStatus.textContent = text;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>function createTaskRow(task = { text: '', completed: false }) {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const li = document.createElement('li');</p>
-<p class="p1"><span class="Apple-converted-space">      </span>if (task.completed) li.classList.add('completed');</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>const checkbox = document.createElement('input');</p>
-<p class="p1"><span class="Apple-converted-space">      </span>checkbox.type = 'checkbox';</p>
-<p class="p1"><span class="Apple-converted-space">      </span>checkbox.checked = Boolean(task.completed);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>checkbox.onchange = handleCheck;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>const input = document.createElement('input');</p>
-<p class="p1"><span class="Apple-converted-space">      </span>input.type = 'text';</p>
-<p class="p1"><span class="Apple-converted-space">      </span>input.placeholder = 'Enter your task';</p>
-<p class="p1"><span class="Apple-converted-space">      </span>input.value = task.text || '';</p>
-<p class="p1"><span class="Apple-converted-space">      </span>input.oninput = () =&gt; scheduleSave();</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>li.appendChild(checkbox);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>li.appendChild(input);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>return li;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>window.addTask = function addTask(section, skipSave = false) {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const ul = document.querySelector(`#${section} ul`);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>ul.appendChild(createTaskRow());</p>
-<p class="p1"><span class="Apple-converted-space">      </span>if (!skipSave) saveTasks();</p>
-<p class="p1"><span class="Apple-converted-space">    </span>};</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>window.handleCheck = function handleCheck(e) {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const li = e.target.closest('li');</p>
-<p class="p1"><span class="Apple-converted-space">      </span>li.classList.toggle('completed');</p>
-<p class="p1"><span class="Apple-converted-space">      </span>if (e.target.checked) {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>confetti({</p>
-<p class="p1"><span class="Apple-converted-space">          </span>particleCount: 100,</p>
-<p class="p1"><span class="Apple-converted-space">          </span>spread: 70,</p>
-<p class="p1"><span class="Apple-converted-space">          </span>origin: { y: 0.6 }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>});</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}</p>
-<p class="p1"><span class="Apple-converted-space">      </span>saveTasks();</p>
-<p class="p1"><span class="Apple-converted-space">    </span>};</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>window.clearSelected = function clearSelected(section) {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const ul = document.querySelector(`#${section} ul`);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>ul.querySelectorAll('li').forEach(li =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>if (li.querySelector('input[type="checkbox"]').checked) {</p>
-<p class="p1"><span class="Apple-converted-space">          </span>li.remove();</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">      </span>});</p>
-<p class="p1"><span class="Apple-converted-space">      </span>saveTasks();</p>
-<p class="p1"><span class="Apple-converted-space">    </span>};</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>window.resetTasks = function resetTasks() {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>sections.forEach(section =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const ul = document.querySelector(`#${section} ul`);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ul.innerHTML = '';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>for (let i = 0; i &lt; 5; i++) addTask(section, true);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>});</p>
-<p class="p1"><span class="Apple-converted-space">      </span>saveTasks();</p>
-<p class="p1"><span class="Apple-converted-space">    </span>};</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>function collectCurrentState() {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const data = {};</p>
-<p class="p1"><span class="Apple-converted-space">      </span>sections.forEach(section =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const tasks = [];</p>
-<p class="p1"><span class="Apple-converted-space">        </span>document.querySelectorAll(`#${section} ul li`).forEach(li =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">          </span>tasks.push({</p>
-<p class="p1"><span class="Apple-converted-space">            </span>text: li.querySelector('input[type="text"]').value,</p>
-<p class="p1"><span class="Apple-converted-space">            </span>completed: li.classList.contains('completed')</p>
-<p class="p1"><span class="Apple-converted-space">          </span>});</p>
-<p class="p1"><span class="Apple-converted-space">        </span>});</p>
-<p class="p1"><span class="Apple-converted-space">        </span>data[section] = tasks;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>});</p>
-<p class="p1"><span class="Apple-converted-space">      </span>return {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>date: dateInput.value,</p>
-<p class="p1"><span class="Apple-converted-space">        </span>sections: data,</p>
-<p class="p1"><span class="Apple-converted-space">        </span>updatedAt: Date.now()</p>
-<p class="p1"><span class="Apple-converted-space">      </span>};</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>function renderState(payload) {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>isApplyingRemoteUpdate = true;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>try {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>if (payload?.date) {</p>
-<p class="p1"><span class="Apple-converted-space">          </span>dateInput.value = payload.date;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>} else if (!dateInput.value) {</p>
-<p class="p1"><span class="Apple-converted-space">          </span>dateInput.value = new Date().toISOString().split('T')[0];</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>const sectionData = payload?.sections || {};</p>
-<p class="p1"><span class="Apple-converted-space">        </span>sections.forEach(section =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">          </span>const ul = document.querySelector(`#${section} ul`);</p>
-<p class="p1"><span class="Apple-converted-space">          </span>ul.innerHTML = '';</p>
-<p class="p1"><span class="Apple-converted-space">          </span>const items = sectionData[section] || [];</p>
-<p class="p1"><span class="Apple-converted-space">          </span>items.forEach(task =&gt; ul.appendChild(createTaskRow(task)));</p>
-<p class="p1"><span class="Apple-converted-space">          </span>for (let i = items.length; i &lt; 5; i++) {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>addTask(section, true);</p>
-<p class="p1"><span class="Apple-converted-space">          </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>});</p>
-<p class="p1"><span class="Apple-converted-space">      </span>} finally {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>isApplyingRemoteUpdate = false;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>function scheduleSave() {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>if (isApplyingRemoteUpdate) return;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const state = collectCurrentState();</p>
-<p class="p1"><span class="Apple-converted-space">      </span>localStorage.setItem('todoData', JSON.stringify(state));</p>
-<p class="p1"><span class="Apple-converted-space">      </span>setStatus('Saving...');</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>clearTimeout(saveTimer);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>saveTimer = setTimeout(() =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>pushToCloud(state);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}, 400);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>async function pushToCloud(state) {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>if (!currentUser) return;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>try {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const userDocRef = doc(db, 'users', currentUser.uid, 'todo', 'current');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>await setDoc(userDocRef, state, { merge: true });</p>
-<p class="p1"><span class="Apple-converted-space">        </span>setStatus('Synced');</p>
-<p class="p1"><span class="Apple-converted-space">      </span>} catch (err) {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>console.error(err);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>setStatus('Offline / Retry');</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>window.saveTasks = function saveTasks() {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>scheduleSave();</p>
-<p class="p1"><span class="Apple-converted-space">    </span>};</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>dateInput.addEventListener('change', () =&gt; scheduleSave());</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>loginBtn.addEventListener('click', async () =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>loginError.textContent = '';</p>
-<p class="p1"><span class="Apple-converted-space">      </span>try {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>await signInWithEmailAndPassword(auth, loginEmail.value.trim(), loginPassword.value);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>} catch (err) {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>loginError.textContent = 'Sign-in failed. Check your email and password.';</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>});</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>logoutBtn.addEventListener('click', async () =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>if (unsubscribeSnapshot) {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>unsubscribeSnapshot();</p>
-<p class="p1"><span class="Apple-converted-space">        </span>unsubscribeSnapshot = null;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}</p>
-<p class="p1"><span class="Apple-converted-space">      </span>await signOut(auth);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>});</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>onAuthStateChanged(auth, (user) =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>currentUser = user;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>if (unsubscribeSnapshot) {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>unsubscribeSnapshot();</p>
-<p class="p1"><span class="Apple-converted-space">        </span>unsubscribeSnapshot = null;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>if (!user) {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>loginView.style.display = 'flex';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>appView.style.display = 'none';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>return;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>loginView.style.display = 'none';</p>
-<p class="p1"><span class="Apple-converted-space">      </span>appView.style.display = 'block';</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>const cached = JSON.parse(localStorage.getItem('todoData') || 'null');</p>
-<p class="p1"><span class="Apple-converted-space">      </span>if (cached) {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>renderState(cached);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>} else {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>renderState({ date: new Date().toISOString().split('T')[0], sections: {} });</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>const userDocRef = doc(db, 'users', user.uid, 'todo', 'current');</p>
-<p class="p1"><span class="Apple-converted-space">      </span>setStatus('Connecting...');</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>unsubscribeSnapshot = onSnapshot(userDocRef, (snapshot) =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>if (snapshot.exists()) {</p>
-<p class="p1"><span class="Apple-converted-space">          </span>const remoteData = snapshot.data();</p>
-<p class="p1"><span class="Apple-converted-space">          </span>const localData = JSON.parse(localStorage.getItem('todoData') || 'null');</p>
-<p class="p1"><span class="Apple-converted-space">          </span>if (!localData || (remoteData.updatedAt || 0) &gt;= (localData.updatedAt || 0)) {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>localStorage.setItem('todoData', JSON.stringify(remoteData));</p>
-<p class="p1"><span class="Apple-converted-space">            </span>renderState(remoteData);</p>
-<p class="p1"><span class="Apple-converted-space">          </span>}</p>
-<p class="p1"><span class="Apple-converted-space">          </span>setStatus('Synced');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>} else {</p>
-<p class="p1"><span class="Apple-converted-space">          </span>const initial = collectCurrentState();</p>
-<p class="p1"><span class="Apple-converted-space">          </span>pushToCloud(initial);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}, (err) =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>console.error(err);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>setStatus('Sync error');</p>
-<p class="p1"><span class="Apple-converted-space">      </span>});</p>
-<p class="p1"><span class="Apple-converted-space">    </span>});</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/script&gt;</p>
-<p class="p1">&lt;/body&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;/html&gt;</p>
+  <header>To-Do List</header>
+
+  <div id="login-view" class="login-card">
+    <h2 style="margin-top: 0;">Sign In</h2>
+    <input type="email" id="login-email" placeholder="Your email" autocomplete="email" />
+    <input type="password" id="login-password" placeholder="Your password" autocomplete="current-password" />
+    <button id="login-btn" type="button">Sign In &amp; Sync</button>
+    <div id="login-error" class="login-error"></div>
+  </div>
+
+  <div id="app-view" style="display: none;">
+    <div class="auth-bar">
+      <span id="sync-status" class="sync-status">Synced</span>
+      <button id="logout-btn" type="button">Sign Out</button>
+    </div>
+
+    <div class="date-section">
+      <input type="date" id="dateInput" />
+    </div>
+
+    <div class="container">
+      <div class="column" id="office">
+        <h2>Other Tasks</h2>
+        <ul></ul>
+        <button onclick="addTask('office')">+ Add Task</button>
+        <button onclick="clearSelected('office')">🧹 Clear Selected</button>
+      </div>
+
+      <div class="column" id="home">
+        <h2>Home Tasks</h2>
+        <ul></ul>
+        <button onclick="addTask('home')">+ Add Task</button>
+        <button onclick="clearSelected('home')">🧹 Clear Selected</button>
+      </div>
+    </div>
+
+    <div class="study-section">
+      <div class="column" id="study">
+        <h2>Study 📘</h2>
+        <div class="study-grid">
+          <ul></ul>
+        </div>
+        <button onclick="addTask('study')">+ Add Task</button>
+        <button onclick="clearSelected('study')">🧹 Clear Selected</button>
+      </div>
+    </div>
+
+    <div class="me-section">
+      <div class="column" id="me">
+        <h2>To finish today 💖</h2>
+        <ul></ul>
+        <button onclick="addTask('me')">+ Add Task</button>
+        <button onclick="clearSelected('me')">🧹 Clear Selected</button>
+      </div>
+    </div>
+
+    <div class="centered-button">
+      <button onclick="resetTasks()">🔄 Daily Reset</button>
+    </div>
+  </div>
+
+  <canvas id="confetti-canvas" style="position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:9999;"></canvas>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import {
+      getAuth,
+      onAuthStateChanged,
+      signInWithEmailAndPassword,
+      signOut
+    } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+    import {
+      getFirestore,
+      doc,
+      setDoc,
+      onSnapshot
+    } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBjAgIXbfKwApYcP0OMcXKp06B1ZC6mjjk",
+      authDomain: "personal-todo-sync-1baef.firebaseapp.com",
+      projectId: "personal-todo-sync-1baef",
+      storageBucket: "personal-todo-sync-1baef.firebasestorage.app",
+      messagingSenderId: "1049871009058",
+      appId: "1:1049871009058:web:81b209b4892cecb60bd17b",
+      measurementId: "G-8WGSTZ2G1Y"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const sections = ['office', 'home', 'me', 'study'];
+    let currentUser = null;
+    let unsubscribeSnapshot = null;
+    let isApplyingRemoteUpdate = false;
+    let saveTimer = null;
+
+    const loginView = document.getElementById('login-view');
+    const appView = document.getElementById('app-view');
+    const loginEmail = document.getElementById('login-email');
+    const loginPassword = document.getElementById('login-password');
+    const loginBtn = document.getElementById('login-btn');
+    const loginError = document.getElementById('login-error');
+    const logoutBtn = document.getElementById('logout-btn');
+    const syncStatus = document.getElementById('sync-status');
+    const dateInput = document.getElementById('dateInput');
+
+    function setStatus(text) {
+      syncStatus.textContent = text;
+    }
+
+    function createTaskRow(task = { text: '', completed: false }) {
+      const li = document.createElement('li');
+      if (task.completed) li.classList.add('completed');
+
+      const checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      checkbox.checked = Boolean(task.completed);
+      checkbox.onchange = handleCheck;
+
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.placeholder = 'Enter your task';
+      input.value = task.text || '';
+      input.oninput = () => scheduleSave();
+
+      li.appendChild(checkbox);
+      li.appendChild(input);
+      return li;
+    }
+
+    window.addTask = function addTask(section, skipSave = false) {
+      const ul = document.querySelector(`#${section} ul`);
+      ul.appendChild(createTaskRow());
+      if (!skipSave) saveTasks();
+    };
+
+    window.handleCheck = function handleCheck(e) {
+      const li = e.target.closest('li');
+      li.classList.toggle('completed');
+      if (e.target.checked) {
+        confetti({
+          particleCount: 100,
+          spread: 70,
+          origin: { y: 0.6 }
+        });
+      }
+      saveTasks();
+    };
+
+    window.clearSelected = function clearSelected(section) {
+      const ul = document.querySelector(`#${section} ul`);
+      ul.querySelectorAll('li').forEach(li => {
+        if (li.querySelector('input[type="checkbox"]').checked) {
+          li.remove();
+        }
+      });
+      saveTasks();
+    };
+
+    window.resetTasks = function resetTasks() {
+      sections.forEach(section => {
+        const ul = document.querySelector(`#${section} ul`);
+        ul.innerHTML = '';
+        for (let i = 0; i < 5; i++) addTask(section, true);
+      });
+      saveTasks();
+    };
+
+    function collectCurrentState() {
+      const data = {};
+      sections.forEach(section => {
+        const tasks = [];
+        document.querySelectorAll(`#${section} ul li`).forEach(li => {
+          tasks.push({
+            text: li.querySelector('input[type="text"]').value,
+            completed: li.classList.contains('completed')
+          });
+        });
+        data[section] = tasks;
+      });
+      return {
+        date: dateInput.value,
+        sections: data,
+        updatedAt: Date.now()
+      };
+    }
+
+    function renderState(payload) {
+      isApplyingRemoteUpdate = true;
+      try {
+        if (payload?.date) {
+          dateInput.value = payload.date;
+        } else if (!dateInput.value) {
+          dateInput.value = new Date().toISOString().split('T')[0];
+        }
+
+        const sectionData = payload?.sections || {};
+        sections.forEach(section => {
+          const ul = document.querySelector(`#${section} ul`);
+          ul.innerHTML = '';
+          const items = sectionData[section] || [];
+          items.forEach(task => ul.appendChild(createTaskRow(task)));
+          for (let i = items.length; i < 5; i++) {
+            addTask(section, true);
+          }
+        });
+      } finally {
+        isApplyingRemoteUpdate = false;
+      }
+    }
+
+    function scheduleSave() {
+      if (isApplyingRemoteUpdate) return;
+      const state = collectCurrentState();
+      localStorage.setItem('todoData', JSON.stringify(state));
+      setStatus('Saving...');
+
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(() => {
+        pushToCloud(state);
+      }, 400);
+    }
+
+    async function pushToCloud(state) {
+      if (!currentUser) return;
+      try {
+        const userDocRef = doc(db, 'users', currentUser.uid, 'todo', 'current');
+        await setDoc(userDocRef, state, { merge: true });
+        setStatus('Synced');
+      } catch (err) {
+        console.error(err);
+        setStatus('Offline / Retry');
+      }
+    }
+
+    window.saveTasks = function saveTasks() {
+      scheduleSave();
+    };
+
+    dateInput.addEventListener('change', () => scheduleSave());
+
+    loginBtn.addEventListener('click', async () => {
+      loginError.textContent = '';
+      try {
+        await signInWithEmailAndPassword(auth, loginEmail.value.trim(), loginPassword.value);
+      } catch (err) {
+        loginError.textContent = 'Sign-in failed. Check your email and password.';
+      }
+    });
+
+    logoutBtn.addEventListener('click', async () => {
+      if (unsubscribeSnapshot) {
+        unsubscribeSnapshot();
+        unsubscribeSnapshot = null;
+      }
+      await signOut(auth);
+    });
+
+    onAuthStateChanged(auth, (user) => {
+      currentUser = user;
+      if (unsubscribeSnapshot) {
+        unsubscribeSnapshot();
+        unsubscribeSnapshot = null;
+      }
+
+      if (!user) {
+        loginView.style.display = 'flex';
+        appView.style.display = 'none';
+        return;
+      }
+
+      loginView.style.display = 'none';
+      appView.style.display = 'block';
+
+      const cached = JSON.parse(localStorage.getItem('todoData') || 'null');
+      if (cached) {
+        renderState(cached);
+      } else {
+        renderState({ date: new Date().toISOString().split('T')[0], sections: {} });
+      }
+
+      const userDocRef = doc(db, 'users', user.uid, 'todo', 'current');
+      setStatus('Connecting...');
+
+      unsubscribeSnapshot = onSnapshot(userDocRef, (snapshot) => {
+        if (snapshot.exists()) {
+          const remoteData = snapshot.data();
+          const localData = JSON.parse(localStorage.getItem('todoData') || 'null');
+          if (!localData || (remoteData.updatedAt || 0) >= (localData.updatedAt || 0)) {
+            localStorage.setItem('todoData', JSON.stringify(remoteData));
+            renderState(remoteData);
+          }
+          setStatus('Synced');
+        } else {
+          const initial = collectCurrentState();
+          pushToCloud(initial);
+        }
+      }, (err) => {
+        console.error(err);
+        setStatus('Sync error');
+      });
+    });
+  </script>
 </body>
+
 </html>
