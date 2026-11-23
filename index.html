@@ -323,6 +323,8 @@
     let unsubscribeSnapshot = null;
     let isApplyingRemoteUpdate = false;
     let saveTimer = null;
+    let lastKnownUpdatedAt = 0;
+    let pendingRemoteData = null;
 
     const loginView = document.getElementById('login-view');
     const appView = document.getElementById('app-view');
@@ -336,6 +338,11 @@
 
     function setStatus(text) {
       syncStatus.textContent = text;
+    }
+
+    function isEditingTaskInput() {
+      const active = document.activeElement;
+      return Boolean(active && active.tagName === 'INPUT' && active.type === 'text' && active.closest('#app-view'));
     }
 
     function createTaskRow(task = { text: '', completed: false }) {
@@ -352,6 +359,13 @@
       input.placeholder = 'Enter your task';
       input.value = task.text || '';
       input.oninput = () => scheduleSave();
+      input.onblur = () => {
+        if (pendingRemoteData) {
+          const queued = pendingRemoteData;
+          pendingRemoteData = null;
+          renderState(queued);
+        }
+      };
 
       li.appendChild(checkbox);
       li.appendChild(input);
@@ -408,17 +422,19 @@
         });
         data[section] = tasks;
       });
+      const updatedAt = Date.now();
+      lastKnownUpdatedAt = Math.max(lastKnownUpdatedAt, updatedAt);
       return {
         date: dateInput.value,
         sections: data,
-        updatedAt: Date.now()
+        updatedAt
       };
     }
 
     function renderState(payload) {
       isApplyingRemoteUpdate = true;
       try {
-        if (payload?.date) {
+        if (payload?.date && document.activeElement !== dateInput) {
           dateInput.value = payload.date;
         } else if (!dateInput.value) {
           dateInput.value = new Date().toISOString().split('T')[0];
@@ -448,7 +464,7 @@
       clearTimeout(saveTimer);
       saveTimer = setTimeout(() => {
         pushToCloud(state);
-      }, 400);
+      }, 900);
     }
 
     async function pushToCloud(state) {
@@ -504,6 +520,7 @@
 
       const cached = JSON.parse(localStorage.getItem('todoData') || 'null');
       if (cached) {
+        lastKnownUpdatedAt = cached.updatedAt || 0;
         renderState(cached);
       } else {
         renderState({ date: new Date().toISOString().split('T')[0], sections: {} });
@@ -515,10 +532,18 @@
       unsubscribeSnapshot = onSnapshot(userDocRef, (snapshot) => {
         if (snapshot.exists()) {
           const remoteData = snapshot.data();
+          const remoteTs = remoteData.updatedAt || 0;
           const localData = JSON.parse(localStorage.getItem('todoData') || 'null');
-          if (!localData || (remoteData.updatedAt || 0) >= (localData.updatedAt || 0)) {
+          const localTs = Math.max(localData?.updatedAt || 0, lastKnownUpdatedAt);
+
+          if (remoteTs > localTs) {
+            lastKnownUpdatedAt = remoteTs;
             localStorage.setItem('todoData', JSON.stringify(remoteData));
-            renderState(remoteData);
+            if (isEditingTaskInput() || saveTimer) {
+              pendingRemoteData = remoteData;
+            } else {
+              renderState(remoteData);
+            }
           }
           setStatus('Synced');
         } else {
